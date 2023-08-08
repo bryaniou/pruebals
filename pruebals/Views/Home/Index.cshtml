@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@model List<pruebals.Models.Producto>
+
+<main>
+    <section class="row" aria-labelledby="aspnetTitle">
+        <h1 id="title">Carrito de compras</h1>
+       
+    </section>
+
+    <div class="row">
+        <section class="col-md-8" aria-labelledby="gettingStartedTitle">
+            <div class="card-body" style="font-size: 12px; padding: 4px;">
+                <table class="table table-bordered table-striped" style="margin-bottom: 0;">
+                    <thead>
+                        <tr style="text-align: center;  background-color: rgba(0,0,0,.05);">
+                            <th style="padding: 7px;">codigo</th>
+                            <th style="padding: 7px;">nombre</th>
+                            <th style="padding: 7px;">precio</th>
+                            <th style="padding: 7px;">stock</th>
+                            <th style="padding: 7px;">descripcion</th>
+                            <th style="padding: 7px;">Acciones</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            if (Model != null)
+                            {
+                                foreach (var items in Model)
+                                {
+                                    <tr style="text-align: center; background-color: white;">
+                                        <td style="padding: 5px;background-color: rgba(0,0,0,.05);">@items.codigo</td>
+                                        <td style="padding: 5px;background-color: rgba(0,0,0,.05);">@items.nombre</td>
+                                        <td style="padding: 5px;background-color: rgba(0,0,0,.05);">@items.precio</td>
+                                        <td style="padding: 5px;background-color: rgba(0,0,0,.05);">@items.stock</td>
+                                        <td style="padding: 5px;background-color: rgba(0,0,0,.05);">@items.descripcion</td>
+                                        <td style="padding: 5px;">
+                                            <div style="padding: 2px;">
+                                                <button onclick="AgregarProductoCarrito(@items.id_producto)" value="@items.id_producto" type="button" class="btn btn-block btn-primary btn-sm">
+                                                    <i class="fas fa-stream"></i>
+                                                    &nbsp Agregar
+                                                </button>
+                                            </div>
+                                        </td>
+
+
+                                        
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <section class="col-md-4" aria-labelledby="hostingTitle">
+            
+        </section>
+    </div>
+</main>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type='text/javascript'>
+    function AgregarProductoCarrito(id_producto) {
+        //alert(id_producto)
+        
+        let json = {
+            id_producto: id_producto
+
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/Home/AgregarCarrito",
+            data: json,
+            success: function (data) {
+                console.log(data)
+                alert(data)
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("eroor carrito")
+            }
+        });
+    }
+
+
+</script>

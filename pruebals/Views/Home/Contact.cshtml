@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+@model List<pruebals.Models.Carrito>
+<main aria-labelledby="title">
+    <h2 id="title">@ViewBag.Title.</h2>
+    <h3>@ViewBag.Message</h3>
+
+    <div class="row">
+        <section class="col-md-8" aria-labelledby="gettingStartedTitle">
+            <div class="card-body" style="font-size: 12px; padding: 4px;">
+                <table class="table table-bordered table-striped" style="margin-bottom: 0;">
+                    <thead>
+                        <tr style="text-align: center;  background-color: rgba(0,0,0,.05);">
+                            <th style="padding: 7px;">Nombre Producto</th>
+                            <th style="padding: 7px;">Cantidad</th>
+                            <th style="padding: 7px;">Valor</th>
+                            <th style="padding: 7px;">Valor con impuestos</th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            if (Model != null)
+                            {
+                                int cant = 0;
+                                decimal valor = 0;
+                                decimal total = 0;
+                                foreach (var items in Model)
+                                {
+
+                                    <tr style="text-align: center; background-color: white;">
+                                        <td style="padding: 5px;background-color: rgba(0,0,0,.05);">@items.nombre</td>
+                                        <td style="padding: 5px;background-color: rgba(0,0,0,.05);">@items.cantidad</td>
+                                        <td style="padding: 5px;background-color: rgba(0,0,0,.05);">@items.valor</td>
+                                        <td style="padding: 5px;background-color: rgba(0,0,0,.05);">@items.total</td>
+
+                                        @{cant = cant + @items.cantidad;}
+                                        @{valor = valor + @items.valor;}
+                                        @{total = total + @items.total;}
+
+
+                                    </tr>
+                                }
+                                <tr style="text-align: center; background-color: white;">
+                                    <td style="padding: 5px;background-color: rgba(0,0,0,.05);">TOTAL</td>
+                                    <td style="padding: 5px;background-color: rgba(0,0,0,.05);">@cant</td>
+                                    <td style="padding: 5px;background-color: rgba(0,0,0,.05);">@valor</td>
+                                    <td style="padding: 5px;background-color: rgba(0,0,0,.05);">@total</td>
+                                </tr>
+                                if (total >= 200)
+                                {
+                                    double descuento = Convert.ToDouble(total) * 0.05;
+                                    double totaldescuento = Convert.ToDouble(total) + (Convert.ToDouble(total) * 0.05);
+
+                                    <tr style="text-align: center; background-color: white;">
+                                        <td style="padding: 5px;background-color: rgba(0,0,0,.05);">Descuento</td>
+                                        <td style="padding: 5px;background-color: rgba(0,0,0,.05);"></td>
+                                        <td style="padding: 5px;background-color: rgba(0,0,0,.05);"></td>
+                                        <td style="padding: 5px;background-color: rgba(0,0,0,.05);">@descuento</td>
+                                    </tr>
+                                    <tr style="text-align: center; background-color: white;">
+                                        <td style="padding: 5px;background-color: rgba(0,0,0,.05);">Toral con descuento</td>
+                                        <td style="padding: 5px;background-color: rgba(0,0,0,.05);"></td>
+                                        <td style="padding: 5px;background-color: rgba(0,0,0,.05);"></td>
+                                        <td style="padding: 5px;background-color: rgba(0,0,0,.05);">@totaldescuento</td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="col-md-4" aria-labelledby="hostingTitle">
+        </section>
+    </div>
+</main>
